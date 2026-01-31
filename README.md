@@ -29,7 +29,7 @@ The game operates in a **zero-gravity environment** with a **constant-speed ball
 
 All mathematical derivations, collision proofs, diagrams, and implementation details are explained step-by-step in the report:
 
-📘 **DXBallGameReport.pdf**
+📘 **report/DXBallGameReport.pdf**
 
 The report includes:
 - Vector-based reflection derivations  
@@ -165,9 +165,13 @@ Compile the project:
 javac *.java
 ```
 
-Run with input and output files:
+Run with:
 ```bash
 java Main
+```
+Run modified version with:
+```bash
+java MainModified
 ```
 Make sure StdDraw.java is available in the same directory or classpath.
 
