@@ -1,0 +1,15 @@
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# Build output (keep locally, ignore in git)
+out/
+
+# macOS
+.DS_Store
+
+# Logs
+*.log
+
+# Editor backup files
+*.save
