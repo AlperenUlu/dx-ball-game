@@ -175,26 +175,40 @@ dxball/
 
 ## 🛠 How to Run
 
-### 1️⃣ Make sure `stdlib.jar` is present.
+### macOS / Linux
 
-### 2️⃣ Compile
-
+Compile:
 ```bash
-javac -cp .:stdlib.jar code/Main.java
+javac -cp .:stdlib.jar code/Main.java code/MainModified.java
 ```
 
-(Windows users should replace `:` with `;`)
-
-### 3️⃣ Run
-
+Run (Standard):
 ```bash
-java -cp .:stdlib.jar code.Main
+java -cp .:stdlib.jar:code Main
 ```
 
-For modified version:
-
+Run (Modified):
 ```bash
-java -cp .:stdlib.jar code.MainModified
+java -cp .:stdlib.jar:code MainModified
+```
+
+---
+
+### Windows (PowerShell / CMD)
+
+Compile:
+```bat
+javac -cp .;stdlib.jar code\Main.java code\MainModified.java
+```
+
+Run (Standard):
+```bat
+java -cp .;stdlib.jar;code Main
+```
+
+Run (Modified):
+```bat
+java -cp .;stdlib.jar;code MainModified
 ```
 
 ---
