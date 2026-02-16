@@ -1,111 +1,143 @@
-# 🎮 DX-BALL (Java Implementation)
+# 🎮 DX-BALL (Java – Physics-Based Brick Breaker)
 
-A fully implemented DX-BALL (Brick Breaker) game developed in Java using the StdDraw graphics library.  
-This project focuses on accurate collision detection, realistic reflection physics, and structured game-state management.
+A Java implementation of the classic **DX-BALL / Brick Breaker** game built using the `StdDraw` graphics library.
 
----
+This project focuses on:
 
-## 📌 Overview
-
-DX-BALL is a classic arcade game where the objective is to clear all bricks by bouncing a ball with a paddle.
-
-This implementation includes:
-
-- Precise surface and corner collision handling
-- Quadratic-based corner reflection calculations
-- Structured two-phase game loop
-- Pause system
-- Victory & Game Over states
-- Modified version with superpowers
-- Fully dynamic brick coloring
+- Accurate surface & corner collision detection
+- Real geometric reflection modeling
+- Structured game-state architecture
+- Physics-driven bounce mechanics
+- Extended version with superpowers
 
 ---
 
-## 🖥 Technologies Used
+## 🎥 Gameplay Videos
 
-- Java
-- StdDraw (2D graphics & animation)
-- Mathematical collision modeling
-- Structured game-state design
+- ▶ Standard Version: https://youtu.be/l8tomnZKi6s  
+- ▶ Modified Version: https://youtu.be/lkw1vsDKx0k  
 
 ---
 
-## 🎮 Game Features
+## 📄 Full Technical Report
 
-### Core Mechanics
+📘 **report/DXBallGameReport.pdf**
 
-- Canvas size: 800x400
-- Paddle controlled by LEFT and RIGHT arrow keys
-- Press SPACE to start
-- Press SPACE again to pause/unpause
-- 10 points per brick
-- Victory when all bricks are cleared
-- Game Over if the ball touches the floor
+The report includes:
 
----
-
-## 🧠 Collision System
-
-This project does not rely on simple bounding-box reflections.  
-It includes detailed geometric calculations for realistic behavior.
-
-### 1️⃣ Surface Collision
-
-- Wall reflections (left, right, top)
-- Paddle top and side collision
-- Brick surface reflections
-
-Velocity components are inverted depending on impact direction.
+- Detailed explanation of all variables
+- Step-by-step breakdown of collision logic
+- Quadratic formula derivation for corner reflection
+- Distance-based reflection model
+- Bug fix explanation for corner–surface conflict
+- Game loop structure analysis
+- Superpower system explanation
+- Screenshots of gameplay states
 
 ---
 
-### 2️⃣ Corner Collision (Advanced)
+## 🎯 Game Goal
 
-Corner hits are calculated using:
+Destroy all bricks by bouncing the ball using the paddle.
 
-- Euclidean distance
-- Reflection angle derived from the normal vector
-- Quadratic equation solving
-- Portion-based velocity updates
+### Win Condition
+- All bricks are removed → **Victory**
 
-Instead of instantly flipping velocity, the system:
-
-- Computes the exact collision portion of movement
-- Adjusts reflection angle
-- Applies the remaining velocity after reflection
-
-This prevents clipping and unrealistic bouncing.
+### Lose Condition
+- Ball touches the floor → **Game Over**
 
 ---
 
-## 🧮 Physics Model
+## ⌨️ Controls
 
-- Bounce angle depends on paddle contact position
-- Both velocityX and velocityY are recalculated dynamically
-- Reflection is based on geometry, not hardcoded rules
+- ← → : Move paddle
+- SPACE : Start game
+- SPACE : Pause / Resume
 
 ---
 
-## 🔄 Game Structure
+## 🧠 Game Architecture
 
-The game runs in two main phases:
+The game is structured around two main gameplay phases:
 
 ### Phase 1 – Pre-Launch
 - Paddle positioning
-- Trajectory line preview
-- Waiting for SPACE to launch
+- Aiming trajectory preview
+- Waiting for SPACE to launch the ball
 
-### Phase 2 – Gameplay
-- Ball movement
+### Phase 2 – Gameplay Loop
+- Ball movement update
 - Collision detection
+- Score update
 - Pause state handling
 - Victory / Game Over rendering
 
 ---
 
+## 🧮 Physics & Collision System
+
+This project does **not** rely on simple bounding-box flips.
+
+It includes advanced collision modeling:
+
+---
+
+### 1️⃣ Surface Collisions
+
+Handled for:
+
+- Left wall
+- Right wall
+- Ceiling
+- Paddle (top + sides)
+- Brick surfaces
+
+Velocity reflection logic:
+
+- Horizontal surface → invert `velocityY`
+- Vertical surface → invert `velocityX`
+
+---
+
+### 2️⃣ Corner Collision (Advanced Geometric Handling)
+
+Corner impacts are computed using:
+
+- Euclidean distance formula
+- Normal vector calculation
+- Angle derivation using `atan`
+- Quadratic equation solving
+- Portion-based velocity splitting
+
+Instead of instantly flipping velocity:
+
+1. The system calculates collision portion of movement.
+2. Reflection angle is computed.
+3. Remaining velocity is applied after reflection.
+4. Final velocity vector is reconstructed.
+
+This prevents:
+- Clipping inside bricks
+- Unrealistic bounce artifacts
+- Diagonal removal bugs
+
+---
+
+### 3️⃣ Collision Priority Fix
+
+A key improvement:
+
+If a brick corner is detected first but
+a surface collision is actually dominant,
+the engine prioritizes correct surface resolution.
+
+This prevents missed bottom/right brick removals.
+
+---
+
 ## ⭐ Modified Version – Superpowers
 
-The enhanced version includes:
+The modified version introduces six power-ups:
 
 1. Eliminate 1–5 random bricks  
 2. Paddle Width +2  
@@ -116,78 +148,117 @@ The enhanced version includes:
 
 Details:
 
-- Two random powers per game
-- Duplicate powers are replaced with Score x2
+- Two random powers per gameplay
+- Duplicate powers replaced with Score x2
 - Effects tracked with a boolean array
 - Only unhit bricks are eliminated
 - Brick colors generated randomly each run
 
 ---
-## 📂 Project Structure
 
-```
+## 📂 Repository Structure
+
+```bash
 dxball/
-│
+├── .idea/
 ├── code/
-│   ├── Main.java              # Standard version of the game
-│   └── MainModified.java      # Modified version with superpowers
-│
-├── report/                    # Project report and documentation
-│   └── DXBallGameReport.pdf
-│
-├── stdlib.jar                 # StdDraw dependency library
-│
-├── README.md
-│
-└── .gitignore
-```
-
-
-## ▶ How to Run
-
-1. Make sure `StdDraw.java` is in the same directory.
-2. Compile:
-
-```
-javac Main.java
-```
-
-3. Run:
-
-```
-java Main
+│   ├── Main.java              # Standard version
+│   └── MainModified.java      # Superpower version
+├── report/
+│   └── DXBallGameReport.pdf   # Full technical explanation
+├── stdlib.jar                 # StdDraw dependency
+├── dxball.iml
+└── README.md
 ```
 
 ---
 
-## 🎥 Gameplay Videos
+## 🛠 How to Run
 
-Standard Version:  
-https://youtu.be/l8tomnZKi6s  
+### 1️⃣ Make sure `stdlib.jar` is present.
 
-Modified Version:  
-https://youtu.be/lkw1vsDKx0k  
+### 2️⃣ Compile
+
+```bash
+javac -cp .:stdlib.jar code/Main.java
+```
+
+(Windows users should replace `:` with `;`)
+
+### 3️⃣ Run
+
+```bash
+java -cp .:stdlib.jar code.Main
+```
+
+For modified version:
+
+```bash
+java -cp .:stdlib.jar code.MainModified
+```
 
 ---
 
-## 🎯 Key Strengths
+## 🎨 Rendering & Visuals
 
-- Real mathematical modeling of collisions
-- Accurate corner reflection logic
-- Structured state-based architecture
-- Clean separation of physics and rendering
-- No external game engine used
+- Canvas: 800x400
+- Bricks stored in 2D coordinate array
+- Dynamic brick color generation
+- On-screen score + angle indicator
+- Pause / Victory / Game Over screens rendered using StdDraw
 
 ---
 
-## 📈 Learning Outcomes
+## 📈 What This Project Demonstrates
 
 - 2D collision detection
-- Reflection physics modeling
-- Quadratic equation applications
-- Game loop architecture
-- Frame-based animation systems
+- Geometric reflection modeling
+- Quadratic equation usage in motion systems
+- State-based game loop architecture
+- Physics-driven arcade mechanics
+- Clean separation between rendering & logic
 
 ---
+
+## 📌 Repository Notice
+
+This repository contains the full implementation
+and is shared strictly for educational purposes.
+
+It is intended to demonstrate:
+
+- Collision modeling
+- Reflection mathematics
+- Structured Java game architecture
+
+---
+
+## ⚠️ Usage Policy
+
+This project is provided **for learning and demonstration only**.
+
+- ❌ Reuse for academic submission is not permitted
+- ❌ Direct copying violates academic integrity
+- ✅ Code may be reviewed to understand physics modeling and architecture
+
+---
+
+## 🏁 Final Remarks
+
+This project transforms a simple brick breaker
+into a mathematically structured physics system.
+
+Key highlights:
+
+- Real geometric corner reflection
+- Portion-based velocity handling
+- Corrected collision-priority logic
+- Clean two-phase game architecture
+- Expandable superpower system
+
+For full understanding:
+- 📘 Read the report
+- 🎥 Watch gameplay
+- 🧠 Explore the code
 
 Author: Alperen Ulu
