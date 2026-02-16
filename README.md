@@ -261,4 +261,3 @@ For full understanding:
 - 🎥 Watch gameplay
 - 🧠 Explore the code
 
-Author: Alperen Ulu
